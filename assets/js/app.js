@@ -83,6 +83,19 @@ const unregisterPush = async () => {
     await subscription.unsubscribe();
 };
 
+const pingActivity = async () => {
+    if (!window.APP_CONFIG?.csrfToken) return;
+    await fetch('/api/activity/ping', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            csrf_token: window.APP_CONFIG.csrfToken
+        })
+    });
+};
+
 if (pushSubscribeButton) {
     pushSubscribeButton.addEventListener('click', () => {
         registerPush().catch(() => alert('Не удалось включить push.'));
@@ -93,4 +106,11 @@ if (pushUnsubscribeButton) {
     pushUnsubscribeButton.addEventListener('click', () => {
         unregisterPush().catch(() => alert('Не удалось отключить push.'));
     });
+}
+
+if (window.APP_CONFIG?.csrfToken) {
+    pingActivity().catch(() => null);
+    setInterval(() => {
+        pingActivity().catch(() => null);
+    }, 60000);
 }
