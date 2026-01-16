@@ -22,9 +22,15 @@ declare(strict_types=1);
 <script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('<?= BASE_URL ?>pwa/service-worker.js');
+            navigator.serviceWorker.register('<?= BASE_URL ?>pwa/service-worker.js', {
+                scope: '<?= rtrim(BASE_URL, '/') ?>/'
+            });
         });
     }
+</script>
+<script>
+    window.APP_CONFIG = window.APP_CONFIG || {};
+    window.APP_CONFIG.baseUrl = '<?= rtrim(BASE_URL, '/') ?>/';
 </script>
 </body>
 </html>

@@ -6,7 +6,7 @@ ob_start();
 <section class="offline">
     <h1>Вы офлайн</h1>
     <p>Базовые экраны доступны. Как только связь появится — синхронизируемся.</p>
-    <button class="primary-button" type="button" onclick="window.location='/'">Обновить</button>
+    <button class="primary-button" type="button" onclick="window.location='<?= BASE_URL ?>'">Обновить</button>
 </section>
 <?php
 $content = ob_get_clean();

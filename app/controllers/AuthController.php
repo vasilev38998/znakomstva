@@ -172,7 +172,10 @@ class AuthController
 
     private function redirect(string $path): void
     {
-        header('Location: ' . $path);
+        $baseUrl = rtrim(BASE_URL, '/');
+        $normalizedPath = '/' . ltrim($path, '/');
+        $target = $baseUrl === '' ? $normalizedPath : $baseUrl . $normalizedPath;
+        header('Location: ' . $target);
         exit;
     }
 

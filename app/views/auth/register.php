@@ -33,7 +33,7 @@ ob_start();
             </label>
             <button class="primary-button" type="submit">Создать аккаунт</button>
         </form>
-        <a class="text-link" href="/login">Уже есть аккаунт? Вход</a>
+        <a class="text-link" href="<?= BASE_URL ?>login">Уже есть аккаунт? Вход</a>
     </div>
 </section>
 <?php

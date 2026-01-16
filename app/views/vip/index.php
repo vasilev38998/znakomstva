@@ -16,7 +16,7 @@ ob_start();
     <h2>Ваш статус</h2>
     <p>Trial до: <?= htmlspecialchars($status['trial_until'] ?? 'не активирован', ENT_QUOTES, 'UTF-8') ?></p>
     <p>VIP до: <?= htmlspecialchars($status['vip_until'] ?? 'не активирован', ENT_QUOTES, 'UTF-8') ?></p>
-    <form method="post" action="/vip/trial">
+    <form method="post" action="<?= BASE_URL ?>vip/trial">
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
         <button class="primary-button" type="submit">Активировать trial</button>
     </form>

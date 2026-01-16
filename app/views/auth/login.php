@@ -22,7 +22,7 @@ ob_start();
             </label>
             <button class="primary-button" type="submit">Войти</button>
         </form>
-        <a class="text-link" href="/register">Нет аккаунта? Регистрация</a>
+        <a class="text-link" href="<?= BASE_URL ?>register">Нет аккаунта? Регистрация</a>
     </div>
 </section>
 <?php

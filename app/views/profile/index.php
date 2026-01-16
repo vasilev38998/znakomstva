@@ -12,7 +12,7 @@ ob_start();
     <div class="flash success"><?= htmlspecialchars($flash, ENT_QUOTES, 'UTF-8') ?></div>
 <?php endif; ?>
 
-<form class="profile-card" method="post" action="/profile/update">
+<form class="profile-card" method="post" action="<?= BASE_URL ?>profile/update">
     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
     <label>
         Имя
@@ -46,13 +46,13 @@ ob_start();
     <?php if (!empty($photos)) : ?>
         <div class="photo-grid">
             <?php foreach ($photos as $photo) : ?>
-                <img src="<?= htmlspecialchars($photo['path'], ENT_QUOTES, 'UTF-8') ?>" alt="Фото">
+                <img src="<?= htmlspecialchars(BASE_URL . ltrim($photo['path'], '/'), ENT_QUOTES, 'UTF-8') ?>" alt="Фото">
             <?php endforeach; ?>
         </div>
     <?php else : ?>
         <p>Пока нет загруженных фото.</p>
     <?php endif; ?>
-    <form method="post" action="/profile/photo" enctype="multipart/form-data">
+    <form method="post" action="<?= BASE_URL ?>profile/photo" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
         <input type="file" name="photo" accept="image/*" required>
         <button class="secondary-button" type="submit">Загрузить</button>

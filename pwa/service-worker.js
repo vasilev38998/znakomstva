@@ -1,14 +1,16 @@
 const CACHE_NAME = 'znak-cache-v2';
-const OFFLINE_URL = '/offline';
+const scopeUrl = new URL(self.registration.scope);
+const withBasePath = (path) => new URL(path.replace(/^\//, ''), scopeUrl).toString();
+const OFFLINE_URL = withBasePath('offline');
 const ASSETS = [
-    '/',
-    '/offline',
-    '/login',
-    '/register',
-    '/assets/css/app.css',
-    '/assets/js/app.js',
-    '/assets/icons/icon.svg',
-    '/pwa/manifest.json'
+    withBasePath(''),
+    withBasePath('offline'),
+    withBasePath('login'),
+    withBasePath('register'),
+    withBasePath('assets/css/app.css'),
+    withBasePath('assets/js/app.js'),
+    withBasePath('assets/icons/icon.svg'),
+    withBasePath('pwa/manifest.json')
 ];
 
 self.addEventListener('install', (event) => {
@@ -41,7 +43,7 @@ self.addEventListener('push', (event) => {
     const payload = event.data ? event.data.json() : { title: 'Новый сигнал', body: 'Откройте Znakomstva' };
     const options = {
         body: payload.body,
-        icon: '/assets/icons/icon.svg',
+        icon: withBasePath('assets/icons/icon.svg'),
         data: payload.data || {}
     };
     event.waitUntil(self.registration.showNotification(payload.title, options));
@@ -49,16 +51,21 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
     event.notification.close();
-    const targetUrl = event.notification.data?.url || '/';
+    const targetUrl = event.notification.data?.url || withBasePath('');
+    const resolvedTarget = targetUrl.startsWith('http')
+        ? targetUrl
+        : targetUrl.startsWith('/')
+            ? new URL(targetUrl, scopeUrl.origin).toString()
+            : withBasePath(targetUrl);
     event.waitUntil(
         clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
             for (const client of clientList) {
-                if (client.url === targetUrl && 'focus' in client) {
+                if (client.url === resolvedTarget && 'focus' in client) {
                     return client.focus();
                 }
             }
             if (clients.openWindow) {
-                return clients.openWindow(targetUrl);
+                return clients.openWindow(resolvedTarget);
             }
         })
     );

@@ -21,7 +21,7 @@ ob_start();
     <?php endif; ?>
 </section>
 
-<form class="chat-form" method="post" action="/chat/send">
+<form class="chat-form" method="post" action="<?= BASE_URL ?>chat/send">
     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
     <input type="hidden" name="match_id" value="<?= htmlspecialchars((string) ($_GET['match_id'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
     <input type="text" name="body" placeholder="Сообщение" required>

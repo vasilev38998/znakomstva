@@ -18,6 +18,13 @@ class Router
     public function dispatch(string $requestUri): void
     {
         $path = parse_url($requestUri, PHP_URL_PATH) ?: '/';
+        $baseUrl = rtrim(BASE_URL, '/');
+        if ($baseUrl !== '' && $baseUrl !== '/' && str_starts_with($path, $baseUrl)) {
+            $path = substr($path, strlen($baseUrl));
+            if ($path === '') {
+                $path = '/';
+            }
+        }
         $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
         if (!isset($this->routes[$method][$path])) {

@@ -17,7 +17,7 @@ ob_start();
     <p>Код-фраза: <?= htmlspecialchars($verification['code_phrase'] ?? 'не указана', ENT_QUOTES, 'UTF-8') ?></p>
 </div>
 
-<form class="verification-card" method="post" action="/verification/submit">
+<form class="verification-card" method="post" action="<?= BASE_URL ?>verification/submit">
     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
     <label>
         Код-фраза

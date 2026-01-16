@@ -25,6 +25,9 @@ cards.forEach((card) => {
 
 const pushSubscribeButton = document.querySelector('[data-push-subscribe]');
 const pushUnsubscribeButton = document.querySelector('[data-push-unsubscribe]');
+const baseUrl = window.APP_CONFIG?.baseUrl ?? '/';
+
+const withBaseUrl = (path) => `${baseUrl}${path.replace(/^\//, '')}`;
 
 const base64ToUint8Array = (base64String) => {
     const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -38,7 +41,7 @@ const base64ToUint8Array = (base64String) => {
 };
 
 const sendSubscription = async (url, subscription) => {
-    const response = await fetch(url, {
+    const response = await fetch(withBaseUrl(url), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -85,7 +88,7 @@ const unregisterPush = async () => {
 
 const pingActivity = async () => {
     if (!window.APP_CONFIG?.csrfToken) return;
-    await fetch('/api/activity/ping', {
+    await fetch(withBaseUrl('/api/activity/ping'), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
