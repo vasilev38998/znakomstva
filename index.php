@@ -30,6 +30,9 @@ require_once __DIR__ . '/app/controllers/VerificationController.php';
 require_once __DIR__ . '/app/controllers/AnalyticsController.php';
 require_once __DIR__ . '/app/controllers/PhotoController.php';
 require_once __DIR__ . '/app/controllers/PaymentController.php';
+require_once __DIR__ . '/app/controllers/FeatureController.php';
+require_once __DIR__ . '/app/controllers/AnalyticsReportController.php';
+require_once __DIR__ . '/app/controllers/TelegramController.php';
 
 $router = new Router();
 $router->get('/', [HomeController::class, 'index']);
@@ -46,6 +49,7 @@ $router->post('/api/events/emit', [EventController::class, 'emit']);
 $router->post('/api/react', [InteractionController::class, 'react']);
 $router->post('/api/activity/ping', [AnalyticsController::class, 'ping']);
 $router->post('/api/payments/webhook', [PaymentController::class, 'webhook']);
+$router->post('/api/telegram/auth', [TelegramController::class, 'auth']);
 $router->get('/notifications', [NotificationController::class, 'index']);
 $router->get('/settings/push', [SettingsController::class, 'push']);
 $router->post('/settings/push', [SettingsController::class, 'push']);
@@ -58,5 +62,8 @@ $router->post('/profile/update', [ProfileController::class, 'update']);
 $router->post('/profile/photo', [PhotoController::class, 'upload']);
 $router->get('/verification', [VerificationController::class, 'index']);
 $router->post('/verification/submit', [VerificationController::class, 'submit']);
+$router->get('/features', [FeatureController::class, 'index']);
+$router->get('/pause', [FeatureController::class, 'pause']);
+$router->get('/analytics', [AnalyticsReportController::class, 'index']);
 
 $router->dispatch($_SERVER['REQUEST_URI']);

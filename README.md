@@ -34,6 +34,14 @@
 
 ## Аналитика
 - `POST /api/activity/ping` — запись активности пользователя и события `activity.ping`.
+- `/analytics` — базовый отчет по событиям.
+
+## Killer-фичи и пауза
+- `/features` — список ключевых фич.
+- `/pause` — экран умной паузы.
+
+## Telegram Mini App
+- `POST /api/telegram/auth` — заготовка авторизации.
 
 ## Платежи
 - `POST /api/payments/webhook` — webhook платежей (СБП Тинькофф), сохраняет `external_id`, `amount` и статус.
