@@ -15,7 +15,7 @@ class PhotoController
     public function upload(): void
     {
         if (empty($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: ' . BASE_URL . 'login');
             exit;
         }
 
@@ -28,12 +28,12 @@ class PhotoController
 
         $file = $_FILES['photo'] ?? null;
         if (!$file) {
-            header('Location: /profile');
+            header('Location: ' . BASE_URL . 'profile');
             exit;
         }
 
         $this->photoService->store((int) $_SESSION['user_id'], $file);
-        header('Location: /profile');
+        header('Location: ' . BASE_URL . 'profile');
         exit;
     }
 }

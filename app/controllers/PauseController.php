@@ -13,7 +13,7 @@ class PauseController
     public function activate(): void
     {
         if (empty($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: ' . BASE_URL . 'login');
             exit;
         }
 
@@ -29,7 +29,7 @@ class PauseController
         $stmt = $pdo->prepare('UPDATE users SET pause_until = DATE_ADD(NOW(), INTERVAL :days DAY) WHERE id = :id');
         $stmt->execute(['days' => $days, 'id' => (int) $_SESSION['user_id']]);
 
-        header('Location: /pause');
+        header('Location: ' . BASE_URL . 'pause');
         exit;
     }
 }

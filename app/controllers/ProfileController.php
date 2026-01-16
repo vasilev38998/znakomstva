@@ -15,7 +15,7 @@ class ProfileController
     public function index(): void
     {
         if (empty($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: ' . BASE_URL . 'login');
             exit;
         }
 
@@ -34,7 +34,7 @@ class ProfileController
     public function update(): void
     {
         if (empty($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: ' . BASE_URL . 'login');
             exit;
         }
 
@@ -60,7 +60,7 @@ class ProfileController
         ]);
 
         $_SESSION['flash_success'] = 'Профиль обновлен.';
-        header('Location: /profile');
+        header('Location: ' . BASE_URL . 'profile');
         exit;
     }
 }

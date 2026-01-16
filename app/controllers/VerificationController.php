@@ -13,7 +13,7 @@ class VerificationController
     public function index(): void
     {
         if (empty($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: ' . BASE_URL . 'login');
             exit;
         }
 
@@ -31,7 +31,7 @@ class VerificationController
     public function submit(): void
     {
         if (empty($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: ' . BASE_URL . 'login');
             exit;
         }
 
@@ -44,7 +44,7 @@ class VerificationController
 
         $codePhrase = trim($_POST['code_phrase'] ?? '');
         if ($codePhrase === '') {
-            header('Location: /verification');
+            header('Location: ' . BASE_URL . 'verification');
             exit;
         }
 
@@ -57,7 +57,7 @@ class VerificationController
         ]);
 
         $_SESSION['flash_success'] = 'Заявка отправлена. Мы проверим селфи в ближайшее время.';
-        header('Location: /verification');
+        header('Location: ' . BASE_URL . 'verification');
         exit;
     }
 }

@@ -15,7 +15,7 @@ class VipController
     public function index(): void
     {
         if (empty($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: ' . BASE_URL . 'login');
             exit;
         }
 
@@ -30,7 +30,7 @@ class VipController
     public function startTrial(): void
     {
         if (empty($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: ' . BASE_URL . 'login');
             exit;
         }
 
@@ -47,7 +47,7 @@ class VipController
         } else {
             $_SESSION['flash_success'] = 'Trial VIP уже использован.';
         }
-        header('Location: /vip');
+        header('Location: ' . BASE_URL . 'vip');
         exit;
     }
 }

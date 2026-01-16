@@ -17,13 +17,13 @@ class ChatController
     public function show(): void
     {
         if (empty($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: ' . BASE_URL . 'login');
             exit;
         }
 
         $matchId = (int) ($_GET['match_id'] ?? 0);
         if ($matchId <= 0) {
-            header('Location: /');
+            header('Location: ' . BASE_URL);
             exit;
         }
 
@@ -51,17 +51,17 @@ class ChatController
         $matchId = (int) ($_POST['match_id'] ?? 0);
         $body = trim($_POST['body'] ?? '');
         if ($matchId <= 0 || $body === '') {
-            header('Location: /chat?match_id=' . $matchId);
+            header('Location: ' . BASE_URL . 'chat?match_id=' . $matchId);
             exit;
         }
 
         if ($this->rateLimiter->tooManyAttempts('chat:' . ($_SESSION['user_id'] ?? '0'), 10, 60)) {
-            header('Location: /chat?match_id=' . $matchId);
+            header('Location: ' . BASE_URL . 'chat?match_id=' . $matchId);
             exit;
         }
 
         $this->messageService->sendMessage($matchId, (int) $_SESSION['user_id'], $body);
-        header('Location: /chat?match_id=' . $matchId);
+        header('Location: ' . BASE_URL . 'chat?match_id=' . $matchId);
         exit;
     }
 }
