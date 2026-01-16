@@ -26,6 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isAdmin) {
     $token = $_POST['csrf_token'] ?? null;
     if (!$csrfService->validateToken($token)) {
         $flash = ['type' => 'error', 'message' => 'Неверный CSRF токен.'];
+    } elseif (!empty($_POST['verification_id']) && !empty($_POST['verification_status'])) {
+        $stmt = $pdo->prepare('UPDATE selfie_verifications SET status = :status WHERE id = :id');
+        $stmt->execute([
+            'status' => $_POST['verification_status'],
+            'id' => (int) $_POST['verification_id'],
+        ]);
+        $flash = ['type' => 'success', 'message' => 'Статус верификации обновлен.'];
     } else {
         $segment = array_filter([
             'status' => $_POST['status'] ?? null,
@@ -54,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isAdmin) {
 }
 
 $jobs = $pdo->query('SELECT id, title, body, scheduled_at, sent_at, stats_sent FROM admin_push_jobs ORDER BY id DESC LIMIT 10')->fetchAll();
+$verifications = $pdo->query('SELECT id, user_id, code_phrase, status, created_at FROM selfie_verifications ORDER BY id DESC LIMIT 10')->fetchAll();
 
 ?><!doctype html>
 <html lang="ru">
@@ -184,6 +192,31 @@ $jobs = $pdo->query('SELECT id, title, body, scheduled_at, sent_at, stats_sent F
                         </div>
                     <?php endforeach; ?>
                 </div>
+            </div>
+        </section>
+
+        <section class="admin-card">
+            <h2>Селфи-верификации</h2>
+            <div class="admin-list">
+                <?php foreach ($verifications as $item) : ?>
+                    <div class="admin-list-item">
+                        <div>
+                            <strong>Пользователь #<?= (int) $item['user_id'] ?></strong>
+                            <p>Код-фраза: <?= htmlspecialchars($item['code_phrase'], ENT_QUOTES, 'UTF-8') ?></p>
+                            <p>Статус: <?= htmlspecialchars($item['status'], ENT_QUOTES, 'UTF-8') ?></p>
+                        </div>
+                        <form method="post">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                            <input type="hidden" name="verification_id" value="<?= (int) $item['id'] ?>">
+                            <select name="verification_status">
+                                <option value="pending">pending</option>
+                                <option value="verified">verified</option>
+                                <option value="rejected">rejected</option>
+                            </select>
+                            <button class="secondary-button" type="submit">Обновить</button>
+                        </form>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </section>
     <?php endif; ?>

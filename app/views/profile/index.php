@@ -40,6 +40,24 @@ ob_start();
     </label>
     <button class="primary-button" type="submit">Сохранить</button>
 </form>
+
+<div class="profile-card">
+    <h2>Фото</h2>
+    <?php if (!empty($photos)) : ?>
+        <div class="photo-grid">
+            <?php foreach ($photos as $photo) : ?>
+                <img src="<?= htmlspecialchars($photo['path'], ENT_QUOTES, 'UTF-8') ?>" alt="Фото">
+            <?php endforeach; ?>
+        </div>
+    <?php else : ?>
+        <p>Пока нет загруженных фото.</p>
+    <?php endif; ?>
+    <form method="post" action="/profile/photo" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+        <input type="file" name="photo" accept="image/*" required>
+        <button class="secondary-button" type="submit">Загрузить</button>
+    </form>
+</div>
 <?php
 $content = ob_get_clean();
 require __DIR__ . '/../layouts/main.php';

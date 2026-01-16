@@ -20,6 +20,7 @@
 
 ## Профиль
 - `/profile` — редактирование профиля
+- `/profile/photo` — загрузка фото
 
 ## Верификация
 - `/verification` — отправка код-фразы для селфи-верификации
@@ -33,6 +34,9 @@
 
 ## Аналитика
 - `POST /api/activity/ping` — запись активности пользователя и события `activity.ping`.
+
+## Платежи
+- `POST /api/payments/webhook` — webhook платежей (СБП Тинькофф), сохраняет `external_id`, `amount` и статус.
 
 ## События (триггеры)
 `POST /api/events/emit` принимает JSON:

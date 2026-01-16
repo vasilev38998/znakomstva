@@ -4,10 +4,12 @@ declare(strict_types=1);
 class ProfileController
 {
     private CsrfService $csrf;
+    private PhotoService $photoService;
 
     public function __construct()
     {
         $this->csrf = new CsrfService();
+        $this->photoService = new PhotoService();
     }
 
     public function index(): void
@@ -21,6 +23,7 @@ class ProfileController
         $stmt = $pdo->prepare('SELECT * FROM profiles WHERE user_id = :user_id LIMIT 1');
         $stmt->execute(['user_id' => (int) $_SESSION['user_id']]);
         $profile = $stmt->fetch();
+        $photos = $this->photoService->list((int) $_SESSION['user_id']);
         $csrfToken = $this->csrf->generateToken();
         $flash = $_SESSION['flash_success'] ?? null;
         unset($_SESSION['flash_success']);
