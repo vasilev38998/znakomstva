@@ -6,12 +6,14 @@ class InteractionController
     private CsrfService $csrf;
     private MatchService $matchService;
     private EventBus $eventBus;
+    private RateLimiter $rateLimiter;
 
     public function __construct()
     {
         $this->csrf = new CsrfService();
         $this->matchService = new MatchService();
         $this->eventBus = new EventBus();
+        $this->rateLimiter = new RateLimiter(__DIR__ . '/../../storage');
     }
 
     public function react(): void
@@ -35,6 +37,12 @@ class InteractionController
         if ($targetId <= 0 || !in_array($type, ['like', 'dislike', 'super'], true)) {
             http_response_code(422);
             $this->respondJson(['status' => 'error', 'message' => 'Неверные параметры']);
+            return;
+        }
+
+        if ($this->rateLimiter->tooManyAttempts('react:' . ($_SESSION['user_id'] ?? '0'), 20, 60)) {
+            http_response_code(429);
+            $this->respondJson(['status' => 'error', 'message' => 'Слишком много реакций']);
             return;
         }
 

@@ -25,6 +25,10 @@ class PaymentController
             http_response_code(422);
             echo $exception->getMessage();
             return;
+        } catch (RuntimeException $exception) {
+            http_response_code(401);
+            echo $exception->getMessage();
+            return;
         }
 
         echo 'OK';

@@ -33,6 +33,7 @@ require_once __DIR__ . '/app/controllers/PaymentController.php';
 require_once __DIR__ . '/app/controllers/FeatureController.php';
 require_once __DIR__ . '/app/controllers/AnalyticsReportController.php';
 require_once __DIR__ . '/app/controllers/TelegramController.php';
+require_once __DIR__ . '/app/controllers/PauseController.php';
 
 $router = new Router();
 $router->get('/', [HomeController::class, 'index']);
@@ -64,6 +65,7 @@ $router->get('/verification', [VerificationController::class, 'index']);
 $router->post('/verification/submit', [VerificationController::class, 'submit']);
 $router->get('/features', [FeatureController::class, 'index']);
 $router->get('/pause', [FeatureController::class, 'pause']);
+$router->post('/pause/activate', [PauseController::class, 'activate']);
 $router->get('/analytics', [AnalyticsReportController::class, 'index']);
 
 $router->dispatch($_SERVER['REQUEST_URI']);

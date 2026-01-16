@@ -39,9 +39,10 @@
 ## Killer-фичи и пауза
 - `/features` — список ключевых фич.
 - `/pause` — экран умной паузы.
+- `POST /pause/activate` — активация паузы для пользователя.
 
 ## Telegram Mini App
-- `POST /api/telegram/auth` — заготовка авторизации.
+- `POST /api/telegram/auth` — заготовка авторизации (подпись HMAC в `X-Telegram-Signature`).
 
 ## Платежи
 - `POST /api/payments/webhook` — webhook платежей (СБП Тинькофф), сохраняет `external_id`, `amount` и статус.

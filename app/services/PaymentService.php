@@ -5,6 +5,11 @@ class PaymentService
 {
     public function handleWebhook(array $payload): void
     {
+        $signature = $_SERVER['HTTP_X_SIGNATURE'] ?? '';
+        if (PAYMENT_WEBHOOK_SECRET !== '' && !$this->verifySignature($payload, $signature)) {
+            throw new RuntimeException('Invalid signature');
+        }
+
         $externalId = $payload['payment_id'] ?? null;
         if (!$externalId) {
             throw new InvalidArgumentException('Missing payment_id');
@@ -46,5 +51,12 @@ class PaymentService
         }
 
         $pdo->commit();
+    }
+
+    private function verifySignature(array $payload, string $signature): bool
+    {
+        $data = json_encode($payload, JSON_UNESCAPED_UNICODE);
+        $hash = hash_hmac('sha256', $data ?: '', PAYMENT_WEBHOOK_SECRET);
+        return hash_equals($hash, $signature);
     }
 }

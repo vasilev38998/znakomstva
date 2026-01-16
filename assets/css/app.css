@@ -350,6 +350,14 @@ body {
     gap: 12px;
 }
 
+.pause input {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 8px 12px;
+    color: var(--text);
+}
+
 .switch {
     display: flex;
     align-items: center;

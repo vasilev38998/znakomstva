@@ -5,11 +5,13 @@ class ChatController
 {
     private CsrfService $csrf;
     private MessageService $messageService;
+    private RateLimiter $rateLimiter;
 
     public function __construct()
     {
         $this->csrf = new CsrfService();
         $this->messageService = new MessageService();
+        $this->rateLimiter = new RateLimiter(__DIR__ . '/../../storage');
     }
 
     public function show(): void
@@ -49,6 +51,11 @@ class ChatController
         $matchId = (int) ($_POST['match_id'] ?? 0);
         $body = trim($_POST['body'] ?? '');
         if ($matchId <= 0 || $body === '') {
+            header('Location: /chat?match_id=' . $matchId);
+            exit;
+        }
+
+        if ($this->rateLimiter->tooManyAttempts('chat:' . ($_SESSION['user_id'] ?? '0'), 10, 60)) {
             header('Location: /chat?match_id=' . $matchId);
             exit;
         }

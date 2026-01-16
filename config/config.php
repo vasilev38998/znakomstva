@@ -12,3 +12,6 @@ define('DB_PASS', '');
 define('BASE_URL', '/');
 
 define('VAPID_PUBLIC_KEY', '');
+
+define('PAYMENT_WEBHOOK_SECRET', '');
+define('TELEGRAM_WEBHOOK_SECRET', '');
