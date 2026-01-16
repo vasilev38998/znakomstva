@@ -11,6 +11,7 @@ require_once __DIR__ . '/app/services/RateLimiter.php';
 require_once __DIR__ . '/app/controllers/HomeController.php';
 require_once __DIR__ . '/app/controllers/AuthController.php';
 require_once __DIR__ . '/app/controllers/PushController.php';
+require_once __DIR__ . '/app/controllers/NotificationController.php';
 
 $router = new Router();
 $router->get('/', [HomeController::class, 'index']);
@@ -23,5 +24,6 @@ $router->get('/verify', [AuthController::class, 'verify']);
 $router->post('/logout', [AuthController::class, 'logout']);
 $router->post('/api/push/subscribe', [PushController::class, 'subscribe']);
 $router->post('/api/push/unsubscribe', [PushController::class, 'unsubscribe']);
+$router->get('/notifications', [NotificationController::class, 'index']);
 
 $router->dispatch($_SERVER['REQUEST_URI']);

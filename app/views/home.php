@@ -7,6 +7,7 @@ ob_start();
     <div class="logo">ZNAKOMSTVA</div>
     <div class="top-actions">
         <?php if ($userId) : ?>
+            <a class="ghost-button" href="/notifications">Уведомления</a>
             <form method="post" action="/logout">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
                 <button class="ghost-button" type="submit">Выйти</button>

@@ -34,6 +34,13 @@ API:
 - `POST /api/push/subscribe`
 - `POST /api/push/unsubscribe`
 
+## Cron
+Добавьте задачу каждые 5 минут:
+```
+php /path/to/znakomstva/cron/send_push.php
+```
+Скрипт обрабатывает запланированные рассылки из `admin_push_jobs`.
+
 ## Демо-данные
 `sql/schema.sql` содержит базовые таблицы. Для тестовых данных добавьте пользователей вручную через phpMyAdmin или SQL.
 
@@ -52,6 +59,7 @@ API:
 /storage
 /sql
 /admin
+/cron
 ```
 
 ## Крон и webhook
