@@ -10,19 +10,19 @@ declare(strict_types=1);
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></title>
-    <link rel="manifest" href="/pwa/manifest.json">
-    <link rel="apple-touch-icon" href="/assets/icons/icon.svg">
-    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="manifest" href="<?= BASE_URL ?>pwa/manifest.json">
+    <link rel="apple-touch-icon" href="<?= BASE_URL ?>assets/icons/icon.svg">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/app.css">
 </head>
 <body>
 <div class="app">
     <?= $content ?>
 </div>
-<script src="/assets/js/app.js" defer></script>
+<script src="<?= BASE_URL ?>assets/js/app.js" defer></script>
 <script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/pwa/service-worker.js');
+            navigator.serviceWorker.register('<?= BASE_URL ?>pwa/service-worker.js');
         });
     }
 </script>

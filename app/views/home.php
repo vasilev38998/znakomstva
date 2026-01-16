@@ -7,18 +7,18 @@ ob_start();
     <div class="logo">ZNAKOMSTVA</div>
     <div class="top-actions">
         <?php if ($userId) : ?>
-            <a class="ghost-button" href="/notifications">Уведомления</a>
-            <a class="ghost-button" href="/settings/push">Настройки</a>
-            <a class="ghost-button" href="/profile">Профиль</a>
-            <a class="ghost-button" href="/verification">Верификация</a>
-            <a class="ghost-button" href="/vip">VIP</a>
-            <a class="ghost-button" href="/chat?match_id=1">Чат</a>
-            <form method="post" action="/logout">
+            <a class="ghost-button" href="<?= BASE_URL ?>notifications">Уведомления</a>
+            <a class="ghost-button" href="<?= BASE_URL ?>settings/push">Настройки</a>
+            <a class="ghost-button" href="<?= BASE_URL ?>profile">Профиль</a>
+            <a class="ghost-button" href="<?= BASE_URL ?>verification">Верификация</a>
+            <a class="ghost-button" href="<?= BASE_URL ?>vip">VIP</a>
+            <a class="ghost-button" href="<?= BASE_URL ?>chat?match_id=1">Чат</a>
+            <form method="post" action="<?= BASE_URL ?>logout">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
                 <button class="ghost-button" type="submit">Выйти</button>
             </form>
         <?php else : ?>
-            <a class="ghost-button" href="/login">Войти</a>
+            <a class="ghost-button" href="<?= BASE_URL ?>login">Войти</a>
         <?php endif; ?>
     </div>
 </header>
@@ -27,7 +27,7 @@ ob_start();
     <h1>Живые знакомства, которые чувствуются.</h1>
     <p>Эмоции, доверие и интерактив. Минимум текста, максимум момента.</p>
     <div class="hero-actions">
-        <a class="primary-button" href="/register">Создать профиль</a>
+        <a class="primary-button" href="<?= BASE_URL ?>register">Создать профиль</a>
         <button class="secondary-button" type="button">Посмотреть демо</button>
     </div>
     <div class="hero-actions">
