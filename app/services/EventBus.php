@@ -4,10 +4,12 @@ declare(strict_types=1);
 class EventBus
 {
     private NotificationService $notificationService;
+    private PushService $pushService;
 
     public function __construct()
     {
         $this->notificationService = new NotificationService();
+        $this->pushService = new PushService();
     }
 
     public function emit(string $event, array $payload, int $userId): void
@@ -31,7 +33,13 @@ class EventBus
             $body = $payload['body'];
         }
 
-        $this->notificationService->create($userId, $definition['type'], $title, $body, $payload);
+        $notificationId = $this->notificationService->create($userId, $definition['type'], $title, $body, $payload);
+        $payload['notification_id'] = $notificationId;
+        $this->pushService->sendToUser($userId, [
+            'title' => $title,
+            'body' => $body,
+            'data' => $payload,
+        ]);
     }
 
     private function definitions(): array

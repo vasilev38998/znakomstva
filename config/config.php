@@ -12,6 +12,8 @@ define('DB_PASS', '');
 define('BASE_URL', '/');
 
 define('VAPID_PUBLIC_KEY', '');
+define('VAPID_PRIVATE_KEY', '');
+define('VAPID_SUBJECT', 'mailto:admin@example.com');
 
 define('PAYMENT_WEBHOOK_SECRET', '');
 define('TELEGRAM_WEBHOOK_SECRET', '');

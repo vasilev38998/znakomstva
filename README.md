@@ -6,7 +6,7 @@
 1. Загрузите весь репозиторий в корень домена.
 2. Создайте БД MySQL и импортируйте `sql/schema.sql`.
 3. Обновите `config/config.php` (DB_HOST/DB_NAME/DB_USER/DB_PASS).
-4. Укажите `VAPID_PUBLIC_KEY` для push.
+4. Укажите `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` и `VAPID_SUBJECT` для push.
 5. Откройте сайт — базовый UI уже работает.
 
 ## Авторизация
@@ -81,6 +81,8 @@
 API:
 - `POST /api/push/subscribe`
 - `POST /api/push/unsubscribe`
+- `POST /api/notifications/delivered`
+- `POST /api/notifications/clicked`
 
 ## Cron
 Добавьте задачу каждые 5 минут:

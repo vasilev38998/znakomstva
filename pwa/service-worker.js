@@ -13,6 +13,18 @@ const ASSETS = [
     withBasePath('pwa/manifest.json')
 ];
 
+const trackNotification = (type, notificationId) => {
+    if (!notificationId) return Promise.resolve();
+    return fetch(withBasePath(`api/notifications/${type}`), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({ notification_id: notificationId })
+    }).catch(() => null);
+};
+
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
@@ -46,7 +58,11 @@ self.addEventListener('push', (event) => {
         icon: withBasePath('assets/icons/icon.svg'),
         data: payload.data || {}
     };
-    event.waitUntil(self.registration.showNotification(payload.title, options));
+    event.waitUntil(
+        self.registration.showNotification(payload.title, options).then(() =>
+            trackNotification('delivered', options.data?.notification_id)
+        )
+    );
 });
 
 self.addEventListener('notificationclick', (event) => {
@@ -58,15 +74,18 @@ self.addEventListener('notificationclick', (event) => {
             ? new URL(targetUrl, scopeUrl.origin).toString()
             : withBasePath(targetUrl);
     event.waitUntil(
-        clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
-            for (const client of clientList) {
-                if (client.url === resolvedTarget && 'focus' in client) {
-                    return client.focus();
+        Promise.all([
+            trackNotification('clicked', event.notification.data?.notification_id),
+            clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+                for (const client of clientList) {
+                    if (client.url === resolvedTarget && 'focus' in client) {
+                        return client.focus();
+                    }
                 }
-            }
-            if (clients.openWindow) {
-                return clients.openWindow(resolvedTarget);
-            }
-        })
+                if (clients.openWindow) {
+                    return clients.openWindow(resolvedTarget);
+                }
+            })
+        ])
     );
 });

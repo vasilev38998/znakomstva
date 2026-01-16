@@ -5,11 +5,13 @@ class PushDispatchService
 {
     private SegmentService $segmentService;
     private NotificationService $notificationService;
+    private PushService $pushService;
 
     public function __construct()
     {
         $this->segmentService = new SegmentService();
         $this->notificationService = new NotificationService();
+        $this->pushService = new PushService();
     }
 
     public function dispatchDueJobs(): int
@@ -40,14 +42,24 @@ class PushDispatchService
                 if (!$this->canSend((int) $user['id'], (int) $user['push_enabled'], $user['quiet_start'], $user['quiet_end'])) {
                     continue;
                 }
-                $this->notificationService->create(
+                $notificationId = $this->notificationService->create(
                     (int) $user['id'],
                     'admin',
                     $job['title'],
                     $job['body'],
                     ['job_id' => $job['id']]
                 );
-                $sent++;
+                $pushSent = $this->pushService->sendToUser((int) $user['id'], [
+                    'title' => $job['title'],
+                    'body' => $job['body'],
+                    'data' => [
+                        'job_id' => $job['id'],
+                        'notification_id' => $notificationId,
+                    ],
+                ]);
+                if ($pushSent > 0) {
+                    $sent++;
+                }
             }
 
             $stmt = $pdo->prepare('UPDATE admin_push_jobs SET sent_at = NOW(), stats_sent = :sent WHERE id = :id');

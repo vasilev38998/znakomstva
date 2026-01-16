@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isAdmin) {
     }
 }
 
-$jobs = $pdo->query('SELECT id, title, body, scheduled_at, sent_at, stats_sent FROM admin_push_jobs ORDER BY id DESC LIMIT 10')->fetchAll();
+$jobs = $pdo->query('SELECT id, title, body, scheduled_at, sent_at, stats_sent, stats_delivered, stats_clicked FROM admin_push_jobs ORDER BY id DESC LIMIT 10')->fetchAll();
 $verifications = $pdo->query('SELECT id, user_id, code_phrase, status, created_at FROM selfie_verifications ORDER BY id DESC LIMIT 10')->fetchAll();
 $payments = $pdo->query('SELECT id, external_id, user_id, amount, status, created_at FROM payments ORDER BY id DESC LIMIT 10')->fetchAll();
 
@@ -70,13 +70,13 @@ $payments = $pdo->query('SELECT id, external_id, user_id, amount, status, create
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Админка — <?= htmlspecialchars(APP_NAME, ENT_QUOTES, 'UTF-8') ?></title>
-    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/app.css">
 </head>
 <body>
 <div class="app">
     <header class="top-bar">
         <div class="logo">ADMIN CENTER</div>
-        <a class="ghost-button" href="/">На сайт</a>
+        <a class="ghost-button" href="<?= BASE_URL ?>">На сайт</a>
     </header>
 
     <?php if (!$isAdmin) : ?>
@@ -189,6 +189,8 @@ $payments = $pdo->query('SELECT id, external_id, user_id, amount, status, create
                                 <span>Запланировано: <?= htmlspecialchars($job['scheduled_at'] ?? 'сразу', ENT_QUOTES, 'UTF-8') ?></span>
                                 <span>Отправлено: <?= htmlspecialchars($job['sent_at'] ?? 'нет', ENT_QUOTES, 'UTF-8') ?></span>
                                 <span>Отправок: <?= (int) $job['stats_sent'] ?></span>
+                                <span>Доставлено: <?= (int) $job['stats_delivered'] ?></span>
+                                <span>Клики: <?= (int) $job['stats_clicked'] ?></span>
                             </div>
                         </div>
                     <?php endforeach; ?>
