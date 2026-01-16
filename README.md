@@ -37,6 +37,7 @@
 
 ## Платежи
 - `POST /api/payments/webhook` — webhook платежей (СБП Тинькофф), сохраняет `external_id`, `amount` и статус.
+- Баланс хранится в `wallets`, операции в `ledger_entries`.
 
 ## События (триггеры)
 `POST /api/events/emit` принимает JSON:

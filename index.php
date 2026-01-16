@@ -15,6 +15,7 @@ require_once __DIR__ . '/app/services/MessageService.php';
 require_once __DIR__ . '/app/services/VipService.php';
 require_once __DIR__ . '/app/services/AnalyticsService.php';
 require_once __DIR__ . '/app/services/PhotoService.php';
+require_once __DIR__ . '/app/services/PaymentService.php';
 require_once __DIR__ . '/app/controllers/HomeController.php';
 require_once __DIR__ . '/app/controllers/AuthController.php';
 require_once __DIR__ . '/app/controllers/PushController.php';

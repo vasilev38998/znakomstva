@@ -62,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isAdmin) {
 
 $jobs = $pdo->query('SELECT id, title, body, scheduled_at, sent_at, stats_sent FROM admin_push_jobs ORDER BY id DESC LIMIT 10')->fetchAll();
 $verifications = $pdo->query('SELECT id, user_id, code_phrase, status, created_at FROM selfie_verifications ORDER BY id DESC LIMIT 10')->fetchAll();
+$payments = $pdo->query('SELECT id, external_id, user_id, amount, status, created_at FROM payments ORDER BY id DESC LIMIT 10')->fetchAll();
 
 ?><!doctype html>
 <html lang="ru">
@@ -215,6 +216,26 @@ $verifications = $pdo->query('SELECT id, user_id, code_phrase, status, created_a
                             </select>
                             <button class="secondary-button" type="submit">Обновить</button>
                         </form>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
+
+        <section class="admin-card">
+            <h2>Платежи</h2>
+            <div class="admin-list">
+                <?php foreach ($payments as $payment) : ?>
+                    <div class="admin-list-item">
+                        <div>
+                            <strong>Платеж #<?= (int) $payment['id'] ?></strong>
+                            <p>External: <?= htmlspecialchars($payment['external_id'], ENT_QUOTES, 'UTF-8') ?></p>
+                            <p>Пользователь: <?= htmlspecialchars((string) ($payment['user_id'] ?? '—'), ENT_QUOTES, 'UTF-8') ?></p>
+                        </div>
+                        <div class="admin-meta">
+                            <span>Сумма: <?= htmlspecialchars((string) $payment['amount'], ENT_QUOTES, 'UTF-8') ?></span>
+                            <span>Статус: <?= htmlspecialchars($payment['status'], ENT_QUOTES, 'UTF-8') ?></span>
+                            <span>Дата: <?= htmlspecialchars($payment['created_at'], ENT_QUOTES, 'UTF-8') ?></span>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>
