@@ -5,6 +5,9 @@ CREATE TABLE users (
     email_verified_at DATETIME NULL,
     role ENUM('user','admin') DEFAULT 'user',
     status ENUM('active','blocked') DEFAULT 'active',
+    vip_until DATETIME NULL,
+    trial_until DATETIME NULL,
+    last_active_at DATETIME NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -15,6 +18,7 @@ CREATE TABLE profiles (
     name VARCHAR(100) NOT NULL,
     age TINYINT UNSIGNED,
     city VARCHAR(120),
+    gender ENUM('male','female','other') DEFAULT 'other',
     goal VARCHAR(120),
     about TEXT,
     mood VARCHAR(120),
@@ -31,6 +35,21 @@ CREATE TABLE email_verifications (
     token VARCHAR(128) NOT NULL UNIQUE,
     expires_at DATETIME NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE push_preferences (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    enabled TINYINT(1) DEFAULT 1,
+    likes TINYINT(1) DEFAULT 1,
+    matches TINYINT(1) DEFAULT 1,
+    messages TINYINT(1) DEFAULT 1,
+    marketing TINYINT(1) DEFAULT 0,
+    quiet_start TIME DEFAULT '23:00:00',
+    quiet_end TIME DEFAULT '08:00:00',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
