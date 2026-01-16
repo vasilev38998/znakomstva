@@ -1,10 +1,13 @@
 {
     "name": "Znakomstva",
     "short_name": "Znak",
+    "description": "Сервис знакомств нового поколения с эмоциями, интерактивом и доверием.",
     "start_url": "/",
+    "scope": "/",
     "display": "standalone",
     "background_color": "#0c0f14",
     "theme_color": "#0c0f14",
+    "orientation": "portrait",
     "icons": [
         {
             "src": "/assets/icons/icon.svg",

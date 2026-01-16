@@ -34,6 +34,12 @@ body {
     align-items: center;
 }
 
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .logo {
     font-weight: 700;
     letter-spacing: 2px;
@@ -47,6 +53,10 @@ body {
     color: var(--text);
     padding: 8px 16px;
     border-radius: 999px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .hero h1 {
@@ -81,6 +91,64 @@ body {
 .secondary-button {
     background: var(--glass);
     color: var(--text);
+}
+
+.text-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.auth {
+    display: grid;
+    place-items: center;
+    min-height: 70vh;
+}
+
+.auth-card {
+    width: min(100%, 420px);
+    background: var(--card);
+    padding: 28px;
+    border-radius: 24px;
+    display: grid;
+    gap: 16px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+.auth-form {
+    display: grid;
+    gap: 12px;
+}
+
+.auth-form label {
+    display: grid;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.auth-form input {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 10px 12px;
+    color: var(--text);
+}
+
+.flash {
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+.flash.error {
+    background: rgba(255, 111, 97, 0.2);
+    color: #ffd5cf;
+}
+
+.flash.success {
+    background: rgba(127, 92, 255, 0.2);
+    color: #e2dcff;
 }
 
 .cards {

@@ -5,15 +5,28 @@ ob_start();
 ?>
 <header class="top-bar">
     <div class="logo">ZNAKOMSTVA</div>
-    <button class="ghost-button" type="button">Войти</button>
+    <div class="top-actions">
+        <?php if ($userId) : ?>
+            <form method="post" action="/logout">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                <button class="ghost-button" type="submit">Выйти</button>
+            </form>
+        <?php else : ?>
+            <a class="ghost-button" href="/login">Войти</a>
+        <?php endif; ?>
+    </div>
 </header>
 
 <section class="hero">
     <h1>Живые знакомства, которые чувствуются.</h1>
     <p>Эмоции, доверие и интерактив. Минимум текста, максимум момента.</p>
     <div class="hero-actions">
-        <button class="primary-button" type="button">Создать профиль</button>
+        <a class="primary-button" href="/register">Создать профиль</a>
         <button class="secondary-button" type="button">Посмотреть демо</button>
+    </div>
+    <div class="hero-actions">
+        <button class="ghost-button" type="button" data-push-subscribe>Включить push</button>
+        <button class="ghost-button" type="button" data-push-unsubscribe>Отключить push</button>
     </div>
 </section>
 
@@ -72,6 +85,12 @@ ob_start();
     <button class="nav-item" type="button">Чаты</button>
     <button class="nav-item" type="button">Профиль</button>
 </nav>
+<script>
+    window.APP_CONFIG = {
+        csrfToken: "<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>",
+        vapidPublicKey: "<?= htmlspecialchars(VAPID_PUBLIC_KEY, ENT_QUOTES, 'UTF-8') ?>"
+    };
+</script>
 <?php
 $content = ob_get_clean();
 require __DIR__ . '/layouts/main.php';

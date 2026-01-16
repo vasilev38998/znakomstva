@@ -6,6 +6,9 @@ class HomeController
     public function index(): void
     {
         $pageTitle = APP_NAME;
+        $csrf = new CsrfService();
+        $csrfToken = $csrf->generateToken();
+        $userId = $_SESSION['user_id'] ?? null;
         require __DIR__ . '/../views/home.php';
     }
 

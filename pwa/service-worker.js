@@ -1,10 +1,13 @@
-const CACHE_NAME = 'znak-cache-v1';
+const CACHE_NAME = 'znak-cache-v2';
 const OFFLINE_URL = '/offline';
 const ASSETS = [
     '/',
     '/offline',
+    '/login',
+    '/register',
     '/assets/css/app.css',
     '/assets/js/app.js',
+    '/assets/icons/icon.svg',
     '/pwa/manifest.json'
 ];
 

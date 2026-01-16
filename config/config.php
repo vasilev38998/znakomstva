@@ -10,3 +10,5 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 
 define('BASE_URL', '/');
+
+define('VAPID_PUBLIC_KEY', '');
