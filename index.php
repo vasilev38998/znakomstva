@@ -22,6 +22,8 @@ require_once __DIR__ . '/app/controllers/EventController.php';
 require_once __DIR__ . '/app/controllers/InteractionController.php';
 require_once __DIR__ . '/app/controllers/ChatController.php';
 require_once __DIR__ . '/app/controllers/VipController.php';
+require_once __DIR__ . '/app/controllers/ProfileController.php';
+require_once __DIR__ . '/app/controllers/VerificationController.php';
 
 $router = new Router();
 $router->get('/', [HomeController::class, 'index']);
@@ -43,5 +45,9 @@ $router->get('/chat', [ChatController::class, 'show']);
 $router->post('/chat/send', [ChatController::class, 'send']);
 $router->get('/vip', [VipController::class, 'index']);
 $router->post('/vip/trial', [VipController::class, 'startTrial']);
+$router->get('/profile', [ProfileController::class, 'index']);
+$router->post('/profile/update', [ProfileController::class, 'update']);
+$router->get('/verification', [VerificationController::class, 'index']);
+$router->post('/verification/submit', [VerificationController::class, 'submit']);
 
 $router->dispatch($_SERVER['REQUEST_URI']);

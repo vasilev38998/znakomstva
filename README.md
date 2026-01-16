@@ -18,6 +18,12 @@
 - Реакции: `POST /api/react` (like/dislike/super)
 - Чат: `/chat?match_id=...` и `POST /chat/send`
 
+## Профиль
+- `/profile` — редактирование профиля
+
+## Верификация
+- `/verification` — отправка код-фразы для селфи-верификации
+
 ## VIP
 - `/vip` — статус VIP/trial
 - `POST /vip/trial` — запуск trial на 24 часа (однократно)

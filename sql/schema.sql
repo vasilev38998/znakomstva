@@ -120,3 +120,12 @@ CREATE TABLE messages (
     FOREIGN KEY (match_id) REFERENCES matches(id),
     FOREIGN KEY (sender_id) REFERENCES users(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE selfie_verifications (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    code_phrase VARCHAR(190) NOT NULL,
+    status ENUM('pending','verified','rejected') DEFAULT 'pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
