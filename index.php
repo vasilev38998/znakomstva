@@ -12,6 +12,7 @@ require_once __DIR__ . '/app/services/NotificationService.php';
 require_once __DIR__ . '/app/services/EventBus.php';
 require_once __DIR__ . '/app/services/MatchService.php';
 require_once __DIR__ . '/app/services/MessageService.php';
+require_once __DIR__ . '/app/services/VipService.php';
 require_once __DIR__ . '/app/controllers/HomeController.php';
 require_once __DIR__ . '/app/controllers/AuthController.php';
 require_once __DIR__ . '/app/controllers/PushController.php';
@@ -20,6 +21,7 @@ require_once __DIR__ . '/app/controllers/SettingsController.php';
 require_once __DIR__ . '/app/controllers/EventController.php';
 require_once __DIR__ . '/app/controllers/InteractionController.php';
 require_once __DIR__ . '/app/controllers/ChatController.php';
+require_once __DIR__ . '/app/controllers/VipController.php';
 
 $router = new Router();
 $router->get('/', [HomeController::class, 'index']);
@@ -39,5 +41,7 @@ $router->get('/settings/push', [SettingsController::class, 'push']);
 $router->post('/settings/push', [SettingsController::class, 'push']);
 $router->get('/chat', [ChatController::class, 'show']);
 $router->post('/chat/send', [ChatController::class, 'send']);
+$router->get('/vip', [VipController::class, 'index']);
+$router->post('/vip/trial', [VipController::class, 'startTrial']);
 
 $router->dispatch($_SERVER['REQUEST_URI']);

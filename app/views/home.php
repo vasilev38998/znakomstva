@@ -9,6 +9,7 @@ ob_start();
         <?php if ($userId) : ?>
             <a class="ghost-button" href="/notifications">Уведомления</a>
             <a class="ghost-button" href="/settings/push">Настройки</a>
+            <a class="ghost-button" href="/vip">VIP</a>
             <a class="ghost-button" href="/chat?match_id=1">Чат</a>
             <form method="post" action="/logout">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">

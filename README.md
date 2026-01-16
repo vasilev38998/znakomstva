@@ -18,6 +18,10 @@
 - Реакции: `POST /api/react` (like/dislike/super)
 - Чат: `/chat?match_id=...` и `POST /chat/send`
 
+## VIP
+- `/vip` — статус VIP/trial
+- `POST /vip/trial` — запуск trial на 24 часа (однократно)
+
 ## Настройки push
 - `/settings/push` — управление типами уведомлений и тихим режимом.
 
