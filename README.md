@@ -14,6 +14,10 @@
 - Вход: `/login`
 - Подтверждение email: `/verify?token=...` (в демо ссылка показывается после регистрации)
 
+## Основные механики
+- Реакции: `POST /api/react` (like/dislike/super)
+- Чат: `/chat?match_id=...` и `POST /chat/send`
+
 ## Настройки push
 - `/settings/push` — управление типами уведомлений и тихим режимом.
 

@@ -90,3 +90,33 @@ CREATE TABLE admin_push_jobs (
     stats_clicked INT UNSIGNED DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE reactions (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    from_user_id INT UNSIGNED NOT NULL,
+    to_user_id INT UNSIGNED NOT NULL,
+    type ENUM('like','dislike','super') NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (from_user_id) REFERENCES users(id),
+    FOREIGN KEY (to_user_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE matches (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_one_id INT UNSIGNED NOT NULL,
+    user_two_id INT UNSIGNED NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_pair (user_one_id, user_two_id),
+    FOREIGN KEY (user_one_id) REFERENCES users(id),
+    FOREIGN KEY (user_two_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE messages (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    match_id INT UNSIGNED NOT NULL,
+    sender_id INT UNSIGNED NOT NULL,
+    body TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (match_id) REFERENCES matches(id),
+    FOREIGN KEY (sender_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
